@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:weight_tracker_demo/model/user.dart';
 import 'package:weight_tracker_demo/screens/authenticate/authenticate.dart';
+
+import 'authenticate/sign_in.dart';
+import 'home/home.dart';
 
 
 ///****************************************************
@@ -10,9 +15,9 @@ import 'package:weight_tracker_demo/screens/authenticate/authenticate.dart';
 //show @authenticate screen if user logged out or home screen if user logged in
 class Wrapper extends StatelessWidget {
   const Wrapper({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    return Authenticate();
+    final user = Provider.of<UserModel?>(context);
+    return user == null ? SignIn() : Home();
   }
 }
