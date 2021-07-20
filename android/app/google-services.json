@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "755550524255",
+    "project_id": "fir-45da8",
+    "storage_bucket": "fir-45da8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:755550524255:android:7c46e4d7cb3c8d49125cea",
+        "android_client_info": {
+          "package_name": "com.example.simple_weight_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "755550524255-kn0u143hh3fj5k5f2p9ub61qajnhvkdh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfl2EmCw5A5tyfT51Zm9aWSFd59XSWTlc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "755550524255-kn0u143hh3fj5k5f2p9ub61qajnhvkdh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:755550524255:android:3c6031f0d73b9ffb125cea",
+        "android_client_info": {
+          "package_name": "com.example.weight_tracker_demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "755550524255-kn0u143hh3fj5k5f2p9ub61qajnhvkdh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfl2EmCw5A5tyfT51Zm9aWSFd59XSWTlc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "755550524255-kn0u143hh3fj5k5f2p9ub61qajnhvkdh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
