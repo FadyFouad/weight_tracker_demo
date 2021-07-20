@@ -15,8 +15,28 @@ class DataBaseServices {
   //create new record in firestore
   Future updateUserBMI(
       double height, double weight, double bmiValue, Timestamp date) async {
-    return await collectionReference.doc(uid).set(
-      {"height": height, "weight": weight, "bmiValue": bmiValue, "date": date},
-    );
+    return await collectionReference.doc(uid).set({
+      Timestamp.now().toDate().toString(): {
+        "height": height,
+        "weight": weight,
+        "bmiValue": bmiValue,
+        "date": date
+      },
+    },SetOptions(merge: true));
+  }
+
+  Stream<List<BmiModel>> get bmi {
+    return collectionReference.snapshots().map(_BmiListFromSnapShot);
+  }
+
+  List<BmiModel> _BmiListFromSnapShot(QuerySnapshot snapShot) {
+    return snapShot.docs
+        .map((doc) => BmiModel(
+              bmiValue: doc.get("weight") / doc.get("height") ?? 0.0,
+              weight: doc.get('weight') ?? 0,
+              height: doc.get('height') ?? 0,
+              date: doc.get('date') ?? null,
+            ))
+        .toList();
   }
 }
