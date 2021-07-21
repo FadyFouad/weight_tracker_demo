@@ -1,7 +1,11 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:weight_tracker_demo/model/bmi_model.dart';
+import 'package:weight_tracker_demo/screens/home/bmi_list.dart';
 import 'package:weight_tracker_demo/services/firestore_services.dart';
 
 ///****************************************************
@@ -21,49 +25,62 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Weight Tracker App'),
-      ),
-      body: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              Flexible(
-                child: TextField(
-                  controller: heightController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: "your Height",
-                    hintText: "175 Cm",
+    return StreamProvider<List<BmiModel>>.value(
+      value: DataBaseServices().bmi,
+      initialData: [],
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Weight Tracker App'),
+        ),
+        body: Container(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: <Widget>[
+                Flexible(
+                  child: TextField(
+                    controller: heightController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: "your Height",
+                      hintText: "175 Cm",
+                    ),
+                    onChanged: (v) {},
                   ),
-                  onChanged: (v) {},
                 ),
-              ),
-              Flexible(
-                child: TextField(
-                  controller: weightController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: "your weight",
-                    hintText: "73 Kg",
+                Flexible(
+                  child: TextField(
+                    controller: weightController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: "your weight",
+                      hintText: "73 Kg",
+                    ),
+                    onChanged: (v) {},
                   ),
-                  onChanged: (v) {},
                 ),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  await DataBaseServices(uid: "6bulmxZRYsZEIzvPDjbhKzVOWgk2").updateUserBMI(
-                      double.parse((heightController).text),
-                      double.parse((weightController).text),
-                      double.parse((heightController).text) /
-                          pow(double.parse((weightController).text), 2),
-                      Timestamp.now());
-                },
-                child: Text("Calc"),
-              ),
-            ],
+                ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+                      UserCredential result =
+                          await _firebaseAuth.signInAnonymously();
+                      await DataBaseServices(uid: result.user!.uid)
+                          .updateUserBMI(
+                              result.user!.uid,
+                              double.parse((heightController).text),
+                              double.parse((weightController).text),
+                              double.parse((weightController).text) /
+                                  pow(double.parse((heightController).text), 2),
+                              Timestamp.now());
+                    } catch (e) {
+                      print(e);
+                    }
+                  },
+                  child: Text("Calc"),
+                ),
+              ],
+            ),
           ),
         ),
       ),
