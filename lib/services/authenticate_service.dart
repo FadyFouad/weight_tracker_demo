@@ -14,7 +14,6 @@ class AuthenticateService {
     try {
       UserCredential result = await _firebaseAuth.signInAnonymously();
       User loggedUser = result.user!;
-      print(loggedUser);
       return _userFromFireBase(loggedUser);
     } catch (e) {
       print(e.toString());

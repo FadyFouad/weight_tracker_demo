@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       ),
       home: StreamProvider<UserModel?>.value(
         value: AuthenticateService().user,
-        initialData: UserModel(""),
+        initialData: null,
         child: Wrapper(),
       ),
     );
