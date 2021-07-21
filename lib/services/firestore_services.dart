@@ -13,8 +13,8 @@ class DataBaseServices {
   DataBaseServices({this.uid});
 
   //create new record in firestore
-  Future updateUserBMI(String id,
-      double height, double weight, double bmiValue, Timestamp date) async {
+  Future updateUserBMI(String id, double height, double weight, double bmiValue,
+      Timestamp date) async {
     return await collectionReference.doc(uid).set({
       Timestamp.now().toDate().toString(): {
         "id": id,
@@ -32,35 +32,21 @@ class DataBaseServices {
   }
 
   List<BmiModel> _bmiListFromSnapShot(QuerySnapshot snapShot) {
-    // dynamic l = snapShot.docs
-    //     .map((doc) => BmiModel(
-    //   bmiValue: double.parse(doc.get("weight")) /
-    //       pow(double.parse(doc.get("height")), 2),
-    //   weight: doc.get('weight') ?? 0,
-    //   height: doc.get('height') ?? 0,
-    //   date: doc.get('date') ?? null,
-    // ))
-    //     .toList();
-    dynamic d = FirebaseFirestore.instance
-        .collection("6bulmxZRYsZEIzvPDjbhKzVOWgk2")
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        print(doc["2021-07-20 23:45:02.183272"]);
+    Map map = snapShot.docs.first.data() as Map;
+    var mapKey = map.keys;
+    print(mapKey);
+    Map<String, dynamic> data;
+    List<BmiModel> bmilList = [];
+    for (var k in mapKey){
+      data = map[k];
+      data.forEach((key, value) {
+        bmilList.add(BmiModel(data['id'],
+            bmiValue: data['bmiValue'],
+            weight: data['weight'],
+            height: data['height'],
+            date: data['date']));
       });
-    });
-
-    print("#=====================================================#");
-    print(d);
-
-    return [
-      BmiModel("", bmiValue: 1, weight: 2, height: 2, date: Timestamp.now())
-    ];
+    }
+    return bmilList.reversed.toList();
   }
-
-// void readNestedData(String uid) {
-//   collectionReference.doc(uid).get().then((docSnapshot) {
-//     print(docSnapshot.get('height'));
-//   });
-// }
 }

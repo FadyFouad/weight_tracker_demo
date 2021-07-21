@@ -37,27 +37,23 @@ class _HomeState extends State<Home> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: <Widget>[
-                Flexible(
-                  child: TextField(
-                    controller: heightController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      labelText: "your Height",
-                      hintText: "175 Cm",
-                    ),
-                    onChanged: (v) {},
+                TextField(
+                  controller: heightController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: "your Height",
+                    hintText: "175 Cm",
                   ),
+                  onChanged: (v) {},
                 ),
-                Flexible(
-                  child: TextField(
-                    controller: weightController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      labelText: "your weight",
-                      hintText: "73 Kg",
-                    ),
-                    onChanged: (v) {},
+                TextField(
+                  controller: weightController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: "your weight",
+                    hintText: "73 Kg",
                   ),
+                  onChanged: (v) {},
                 ),
                 ElevatedButton(
                   onPressed: () async {
@@ -79,6 +75,7 @@ class _HomeState extends State<Home> {
                   },
                   child: Text("Calc"),
                 ),
+                Expanded(child: BmiList()),
               ],
             ),
           ),

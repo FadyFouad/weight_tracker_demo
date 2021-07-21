@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:weight_tracker_demo/model/bmi_model.dart';
 
@@ -17,12 +18,17 @@ class _BmiListState extends State<BmiList> {
   @override
   Widget build(BuildContext context) {
     final bmiList = Provider.of<List<BmiModel>>(context);
-    return Container(
+    return Expanded(
       child: ListView.builder(
-        itemBuilder: (context, index) {
-          return Text(bmiList[index].date.toString());
-        },
-        itemCount: bmiList.length,
+          itemBuilder: (context, index) {
+            return Text("your weight at : " +
+                DateFormat('yyyy-MM-dd – kk:mm').format( bmiList[index].date.toDate()).toString() +
+                "\n Was " +
+                bmiList[index].weight.toString() +
+                "\n and your BMI was : " +
+                bmiList[index].bmiValue.toString()+'\n');
+          },
+          itemCount: bmiList.length,
       ),
     );
   }

@@ -5,6 +5,14 @@ import 'package:weight_tracker_demo/model/user.dart';
 import 'package:weight_tracker_demo/screens/wrapper.dart';
 import 'package:weight_tracker_demo/services/authenticate_service.dart';
 
+/*
+After sign in, the app shows a page where the user can: ✓
+•TODO Enter his/her weight and height into a form and submit it ✓✓
+•TODO Save this along with the BMI and Weight Status and  the current time into Firestore ✓✓✓
+•TODO View a list of all weight entries, sorted by most recent date ✓✓✓✓
+*/
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

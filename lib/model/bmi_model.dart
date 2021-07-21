@@ -12,13 +12,6 @@ class BmiModel {
   final Timestamp date;
 
   BmiModel(this.id, {required this.bmiValue,
-    required this.weight, required this.height, required this.date});
+      required this.weight, required this.height, required this.date});
 
-
-// BmiModel.fromMap(Map<String,dynamic>data, this.id, this.weight, this.height, this.bmiValue, this.date){
-//   id = data['id'];
-//   weight = data['id'];
-//   height = data['id'];
-//   bmiValue = data['id'];
-//   date = data['id'];
 }
