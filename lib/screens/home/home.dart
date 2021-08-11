@@ -1,17 +1,63 @@
-import 'dart:math';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:weight_tracker_demo/model/bmi_model.dart';
-import 'package:weight_tracker_demo/screens/home/bmi_list.dart';
-import 'package:weight_tracker_demo/services/firestore_services.dart';
+import 'package:weight_tracker_demo/screens/projects/projects.dart';
+import 'package:weight_tracker_demo/screens/technicans/technicans.dart';
 
 ///****************************************************
 ///*** Created by Fady Fouad on 20-Jul-21 at 18:50.***
 ///****************************************************
 
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  int currentIndex = 1;
+  final screens = [
+    Projects(),
+    Techn(),
+  ];
+  TextEditingController weightController = TextEditingController();
+  TextEditingController heightController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: IndexedStack(
+        index: currentIndex,
+        children: screens,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.blue,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white70,
+        iconSize: 40,
+        selectedFontSize: 18,
+        unselectedFontSize: 16,
+        showSelectedLabels: true,
+        showUnselectedLabels: false,
+        currentIndex: currentIndex,
+        onTap: (index) => setState(() => currentIndex = index),
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_tree_outlined),
+            label: 'Projects',
+            //backgroundColor: Colors.blue,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_box),
+            label: 'Technicians',
+            //backgroundColor: Colors.red,
+          ),
+        ],
+      ),
+    );
+  }
+}
+/*
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -84,3 +130,4 @@ class _HomeState extends State<Home> {
     );
   }
 }
+*/

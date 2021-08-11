@@ -9,18 +9,46 @@ class DataBaseServices {
   final String? uid;
   final CollectionReference collectionReference =
       FirebaseFirestore.instance.collection("BMI");
+  final CollectionReference usersCollectionReference =
+      FirebaseFirestore.instance.collection("Users");
+  final CollectionReference technicalsCollectionReference =
+      FirebaseFirestore.instance.collection("Technicals");
+  final CollectionReference projectsCollectionReference =
+      FirebaseFirestore.instance.collection("Projects");
+  final CollectionReference toolsCollectionReference =
+      FirebaseFirestore.instance.collection("Tools");
 
   DataBaseServices({this.uid});
 
   //create new record in firestore
   Future updateUserBMI(String id, double height, double weight, double bmiValue,
       Timestamp date) async {
-    return await collectionReference.doc(uid).set({
+    return await usersCollectionReference.doc(uid).set({
       Timestamp.now().toDate().toString(): {
         "id": id,
         "height": height,
         "weight": weight,
         "bmiValue": bmiValue,
+        "date": date
+      },
+    }, SetOptions(merge: true));
+  }
+
+  //create new record in firestore
+  Future updateUserData(
+      {required String id,
+      required String name,
+      required String email,
+      required String photoURL,
+      required int type,
+      required DateTime? date}) async {
+    return await collectionReference.doc(uid).set({
+      Timestamp.now().toDate().toString(): {
+        "id": id,
+        "name": name,
+        "email": email,
+        "PhotoURL": photoURL,
+        "type": type,
         "date": date
       },
     }, SetOptions(merge: true));
@@ -37,7 +65,7 @@ class DataBaseServices {
     print(mapKey);
     Map<String, dynamic> data;
     List<BmiModel> bmilList = [];
-    for (var k in mapKey){
+    for (var k in mapKey) {
       data = map[k];
       data.forEach((key, value) {
         bmilList.add(BmiModel(data['id'],
