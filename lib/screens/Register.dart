@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:weight_tracker_demo/model/user.dart';
 import 'package:weight_tracker_demo/services/authenticate_service.dart';
 
 import 'authenticate/sign_in.dart';
@@ -43,7 +42,6 @@ class _LoginDemoState extends State<_RegisterPage> {
   TextEditingController _userPasswordController2 = TextEditingController();
 
   AuthenticateService auth = AuthenticateService();
-
 
   @override
   Widget build(BuildContext context) {
@@ -96,13 +94,13 @@ class _LoginDemoState extends State<_RegisterPage> {
                             //gapPadding: 4.0,
                             //borderRadius: BorderRadius.all(Radius.circular(5.0)),
                             borderSide:
-                            BorderSide(color: Colors.white, width: 0.5),
+                                BorderSide(color: Colors.white, width: 0.5),
                           ),
                           focusedBorder: OutlineInputBorder(
                             //gapPadding: .0,
                             //borderRadius: BorderRadius.all(Radius.circular(5.0)),
                             borderSide:
-                            BorderSide(color: Colors.white, width: 1.5),
+                                BorderSide(color: Colors.white, width: 1.5),
                           ),
                           labelText: 'Email',
                           hintText: ''),
@@ -130,13 +128,13 @@ class _LoginDemoState extends State<_RegisterPage> {
                             //gapPadding: 4.0,
                             //borderRadius: BorderRadius.all(Radius.circular(5.0)),
                             borderSide:
-                            BorderSide(color: Colors.white, width: 0.5),
+                                BorderSide(color: Colors.white, width: 0.5),
                           ),
                           focusedBorder: OutlineInputBorder(
                             //gapPadding: .0,
                             //borderRadius: BorderRadius.all(Radius.circular(5.0)),
                             borderSide:
-                            BorderSide(color: Colors.white, width: 1.5),
+                                BorderSide(color: Colors.white, width: 1.5),
                           ),
                           labelText: 'Full Name',
                           hintText: ''),
@@ -177,15 +175,15 @@ class _LoginDemoState extends State<_RegisterPage> {
                           hintStyle: TextStyle(color: Colors.white54),
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(5.0)),
+                                BorderRadius.all(Radius.circular(5.0)),
                             borderSide:
-                            BorderSide(color: Colors.white, width: 0.5),
+                                BorderSide(color: Colors.white, width: 0.5),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(5.0)),
+                                BorderRadius.all(Radius.circular(5.0)),
                             borderSide:
-                            BorderSide(color: Colors.white, width: 1.5),
+                                BorderSide(color: Colors.white, width: 1.5),
                           ),
                           //width: 16.0, color: Colors.lightBlue.shade50),
                           //bottom: BorderSide(width: 16.0, color: Colors.lightBlue.shade900),
@@ -213,15 +211,14 @@ class _LoginDemoState extends State<_RegisterPage> {
                               icon: Icon(
                                 _passwordVisible2
                                     ? Icons.visibility
-                                    : Icons
-                                    .visibility_off,
+                                    : Icons.visibility_off,
                                 // Based on passwordVisible state choose the icon
                                 color: Colors.white70,
                               ),
                               onPressed: () {
                                 setState(() {
                                   _passwordVisible2 =
-                                  !_passwordVisible2; // Update the state i.e. toogle the state of passwordVisible variable
+                                      !_passwordVisible2; // Update the state i.e. toogle the state of passwordVisible variable
                                 });
                               }),
                           filled: true,
@@ -230,15 +227,15 @@ class _LoginDemoState extends State<_RegisterPage> {
                           hintStyle: TextStyle(color: Colors.white54),
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(5.0)),
+                                BorderRadius.all(Radius.circular(5.0)),
                             borderSide:
-                            BorderSide(color: Colors.white, width: 0.5),
+                                BorderSide(color: Colors.white, width: 0.5),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(5.0)),
+                                BorderRadius.all(Radius.circular(5.0)),
                             borderSide:
-                            BorderSide(color: Colors.white, width: 1.5),
+                                BorderSide(color: Colors.white, width: 1.5),
                           ),
                           labelText: 'Confirm New Password',
                           hintText: ''),
@@ -248,7 +245,7 @@ class _LoginDemoState extends State<_RegisterPage> {
                     height: 50,
                     width: 350,
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (!_emailController.text.contains('@')) {
                           displayToastMessage('Enter a valid Email', context);
                         } else if (_usernameController.text.isEmpty) {
@@ -267,17 +264,32 @@ class _LoginDemoState extends State<_RegisterPage> {
                             //   showInSnackBar('Processing...',context);
                           });
                           // registerNewUser(context);
-                          auth.signUpWithEmailANdPassword(_emailController.text,
-                            _userPasswordController1.text,
-                            _usernameController.text,
-                            "url.com.png",
+                          dynamic newUser =
+                              await auth.signUpWithEmailANdPassword(
+                            email: _emailController.text,
+                            password: _userPasswordController1.text,
+                            displayName: _usernameController.text,
+                            photoURL: 'photoURL',
                           );
+                          print(newUser);
+                          if (newUser != null) {
+                            showInSnackBar(
+                                'Account Created ${_usernameController.text}',
+                                context);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) => Home()));
+                          } else {
+                            print("errrror");
+                          }
                         }
                       },
                       child: Text(
                         'Register',
                         //style: TextStyle(color: Colors.white, fontSize: 20,),
-                        style: TextStyle(color: Colors.white,
+                        style: TextStyle(
+                          color: Colors.white,
                           fontWeight: FontWeight.w500,
                         ),
                       ),

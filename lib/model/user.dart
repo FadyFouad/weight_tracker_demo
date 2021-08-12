@@ -1,18 +1,32 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 ///****************************************************
 ///*** Created by Fady Fouad on 20-Jul-21 at 19:15.***
 ///****************************************************
 
 class UserModel {
   final String uid;
-  final String name;
+  final String displayName;
+  final String email;
+  final String phoneNumber;
+  final String photoURL;
   final UserType type;
-  final String createdDate;
+  final DateTime creationTime;
 
   UserModel(
-      {required this.uid,
-      required this.name,
+      {required this.email,
+      required this.phoneNumber,
+      required this.photoURL,
+      required this.uid,
+      required this.displayName,
       required this.type,
-      required this.createdDate});
+      required this.creationTime});
 }
 
-enum UserType { ADMIN, SUPERVISOR, ENGINEER, TECHNICAl }
+enum UserType {
+  TECHNICAl,
+  ENGINEER,
+  ADMIN,
+
+
+}

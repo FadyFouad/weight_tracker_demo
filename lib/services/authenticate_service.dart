@@ -12,23 +12,25 @@ class AuthenticateService {
 
   //create new User with email&password
   Future signUpWithEmailANdPassword(
-      String email, String password, String name, String url) async {
+      {required String email, required String password, required String displayName, required String photoURL}) async {
     try {
       UserCredential result = await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
-      User loggedUser = result.user!;
-      loggedUser.updateDisplayName(name);
-      loggedUser.updatePhotoURL(url);
-      DataBaseServices(uid: loggedUser.uid).updateUserData(
-          id: loggedUser.uid,
-          name: name,
+      User createdUser = result.user!;
+      createdUser.updateDisplayName(displayName);
+      createdUser.updatePhotoURL(photoURL);
+      DataBaseServices(uid: createdUser.uid).updateUserData(
+          uid: createdUser.uid,
+          displayName: displayName,
           email: email,
-          photoURL: url,
-          date: loggedUser.metadata.creationTime,
+          phoneNumber: '',
+          photoURL: photoURL,
+          creationTime: createdUser.metadata.creationTime,
           type: 1);
-      return _userFromFireBase(loggedUser);
+      return createdUser;
     } catch (e) {
       print(e.toString());
+      print("NULLL");
       return null;
     }
   }
@@ -68,9 +70,12 @@ class AuthenticateService {
     return user != null
         ? UserModel(
             uid: user.uid,
-            name: user.displayName.toString(),
+            displayName: user.displayName.toString(),
             type: UserType.ADMIN,
-            createdDate: user.uid)
+            creationTime: user.metadata.creationTime!,
+            email: user.email!,
+            phoneNumber: user.phoneNumber == null ? '' : user.phoneNumber!,
+            photoURL: '')
         : null;
   }
 
